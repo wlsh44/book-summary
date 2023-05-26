@@ -1,4 +1,4 @@
-package org.example;
+package org.example.v3;
 
 public class Audience {
 
@@ -8,7 +8,7 @@ public class Audience {
         this.bag = bag;
     }
 
-    public Bag getBag() {
-        return bag;
+    public Long buyTicket(Ticket ticket) {
+        return bag.hold(ticket);
     }
 }

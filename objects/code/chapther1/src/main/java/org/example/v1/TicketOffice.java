@@ -1,4 +1,4 @@
-package org.example;
+package org.example.v1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,11 +17,11 @@ public class TicketOffice {
         return tickets.get(0);
     }
 
-    public void minusTicket(Long amount) {
+    public void minusAmount(Long amount) {
         this.amount -= amount;
     }
 
-    public void plusTicket(Long amount) {
+    public void plusAmount(Long amount) {
         this.amount += amount;
     }
 }

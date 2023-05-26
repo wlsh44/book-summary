@@ -1,4 +1,4 @@
-package org.example;
+package org.example.v1;
 
 public class Theater {
 
@@ -15,7 +15,7 @@ public class Theater {
         } else {
             Ticket ticket = ticketSeller.getTicketOffice().getTicket();
             audience.getBag().minusAmount(ticket.getFee());
-            ticketSeller.getTicketOffice().plusTicket(ticket.getFee());
+            ticketSeller.getTicketOffice().plusAmount(ticket.getFee());
             audience.getBag().setTicket(ticket);
         }
     }

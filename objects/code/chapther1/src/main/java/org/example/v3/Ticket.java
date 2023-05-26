@@ -1,4 +1,4 @@
-package org.example;
+package org.example.v3;
 
 public class Ticket {
     private Long fee;
