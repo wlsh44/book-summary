@@ -42,12 +42,14 @@ public class Theater {
 ```
 
 **문제점 1.** 관람객과 판매원이 소극장의 통제를 받는 수동적인 존재라는 점
+
 - 관람객의 경우 소극장이라는 제 3자가 관람객의 가방을 마음대로 열어 봄
 - 판매원의 경우 소극장이라는 제 3자가 매표소의 보관 중인 티켓과 현금에 마음대로 접근함
 - 이해 가능한 코드란 우리 예상에 크게 벗어나지 않는 코드
   => **현재 코드는 예상에서 벗어남**, 협력이 이뤄지지 않고 있음
-    
+
 **문제점 2.** 세부적인 내용들을 한꺼번에 기억하고 있어야 함
+
 - Audience가 Bag을 가지고 있음
 - Bag 안에는 현금과 티켓이 들어 있음
 - TicketSeller가 TicketOffice에서 티켓을 판매함
@@ -56,20 +58,24 @@ public class Theater {
 ### 변경에 취약한 코드
 
 **문제점 3.** 의존성이 너무 높기 때문에(결합도가 높음) 변경에 취약함
+
 - 가방을 들고 있지 않다면?
 - 현금이 아니라 카드를 이용해서 결제를 한다면?
 
 가방을 들고 있지 않는 경우
+
 - Audience의 Bag 제거
 - Theater의 enter 메서드 수정
 
 **의존성**
+
 - 의존성은 변경과 관련돼 있음
 - 변경에 대한 영향을 암시 -> 의존성이 높으면 변경의 영향 커짐, 낮으면 영향 줄어듬
 - 어떤 객체가 변경될 때 그 객체에게 의존하는 다른 객체도 함께 변경될 수 있다는 사실이 내포돼 있음
 - **의존성을 없애는 것이 정답이 아니라 서로 의존하면서 협력하는 객체들의 공동체를 구축하는 것이 객체지향의 목표**
 
 **결합도(Coupling)**
+
 - 객체들의 의존성이 과한 경우 -> 결합도 높음
 - 객체들의 의존성이 낮은 경우 -> 결합도 낮음
 - 결합도를 낮춰 변경에 용이한 설계를 만들어야 함
@@ -90,11 +96,7 @@ Audience와 TicketSeller를 **자율적인 존재**로 만들어야 함
 
 ```java
 public class TicketSeller {
-    private TicketOffice ticketOffice;
-
-    public TicketSeller(TicketOffice ticketOffice) {
-        this.ticketOffice = ticketOffice;
-    }
+    //...
 
 //    public TicketOffice getTicketOffice() {
 //        return ticketOffice;
@@ -115,26 +117,23 @@ public class TicketSeller {
 ```
 
 변경된 점
+
 - Theater가 더이상 TicketOffice에 접근할 수 없음
 - TicketSeller는 ticketOffice에서 티켓을 꺼내거나 판매 요금을 적립하는 일을 스스로 수행할 수밖에 없음
 
 **캡슐화(encapsulation)**
+
 - 개념적이나 물리적으로 객체 내부의 세부적인 사항을 감추는 것
 - 변경하기 쉬운 객체를 만드는 것
 - 객체 내부로의 접근을 제한하면 객체와 객체 사이의 결합도를 낮출 수 있음 -> 설계를 좀 더 쉽게 변경할 수 있음
 
 ```java
 public class Theater {
+    //...
 
-  private TicketSeller ticketSeller;
-
-  public Theater(TicketSeller ticketSeller) {
-    this.ticketSeller = ticketSeller;
-  }
-
-  public void enter(Audience audience) {
-    ticketSeller.sellTo(audience);
-  }
+    public void enter(Audience audience) {
+        ticketSeller.sellTo(audience);
+    }
 }
 ```
 
@@ -147,11 +146,7 @@ public class Theater {
 
 ```java
 public class TicketSeller {
-    private TicketOffice ticketOffice;
-
-    public TicketSeller(TicketOffice ticketOffice) {
-        this.ticketOffice = ticketOffice;
-    }
+    //...
 
     public void sellTo(Audience audience) {
         Ticket ticket = ticketOffice.getTicket();
@@ -170,49 +165,46 @@ public class TicketSeller {
 }
 
 public class Audience {
-
-  private Bag bag;
-
-  public Audience(Bag bag) {
-    this.bag = bag;
-  }
+    //...
 
 //    public Bag getBag() {
 //        return bag;
 //    }
 
-  public Long buyTicket(Ticket ticket) {
-    if (bag.hasInvitation()) {
-      bag.setTicket(ticket);
-      return 0L;
-    } else {
-      bag.setTicket(ticket);
-      bag.minusAmount(ticket.getFee());
-      return ticket.getFee();
+    public Long buyTicket(Ticket ticket) {
+        if (bag.hasInvitation()) {
+            bag.setTicket(ticket);
+            return 0L;
+        } else {
+            bag.setTicket(ticket);
+            bag.minusAmount(ticket.getFee());
+            return ticket.getFee();
+        }
     }
-  }
 }
 
 ```
 
 변경된 점
+
 - Audience는 자신의 가방 안에 초대장이 들어있는지를 스스로 확인함
 - 외부에서는 Audience가 Bag을 소유하고 있다는 사실을 알 필요가 없음
 
 ### 무엇이 개선되었는가
 
 - 필요한 기능을 오류 없이 수행해야 함 ✅
-- 코드가 우리의 예상과 정확하게 일치해야 함 ✅ 
-- 설계가 변경에 용이해야 함 ✅ 
+- 코드가 우리의 예상과 정확하게 일치해야 함 ✅
+- 설계가 변경에 용이해야 함 ✅
 
 ### 어떻게 한 것인가
 
 - **캡슐화를 통해 객체가 자기 자신의 문제를 스스로 해결하도록 코드를 변경**
-  - 결합도가 낮아지고 객체의 자율성을 높이는 방향으로 설계를 개선
+    - 결합도가 낮아지고 객체의 자율성을 높이는 방향으로 설계를 개선
 
 ### 결합도와 응집도
 
 **응집도(cohesion)**
+
 - 밀접하게 연관된 작업만을 수행하고 연관성 없는 작업은 다른 객체에게 위임하는 것
 - 위를 잘 지킬 수록 응집도가 높은 객체
 - 응집도를 높이기 위해서는 스스로 자신의 데이터를 처리해야 하는 자율적인 존재여야 함
@@ -220,19 +212,23 @@ public class Audience {
 ### 절차지향과 객체지향
 
 수정하기 전 코드
+
 - Theater의 enter 메서드 안에서 Audience와 TicketSeller로부터 Bag과 TicketOffice를 가져와 관람객을 입장시키는 절차를 구현
 - enter 메서드는 모든 객체에 대한 정보를 알고 있어야 했음
+
 ```text
 이 관점에서 enter 메서드는 프로세스(process)이며, Audience, TicketSeller, Bag, TicketOffice는 데이터(data)
 ```
 
 절차지향 문제점
+
 - 의존성 높은 코드
 - 우리의 예상에서 벗어나 코드를 읽는 사람과의 원활한 소통 x
 - 데이터의 변경으로 인한 영향을 지역적으로 고립시키기 어려움
 - 변경에 취약
 
 **객체지향 프로그래밍이란?**
+
 - 자신의 데이터를 스스로 처리하도록 이동시켜, 데이터와 프로세스가 동일한 모듈 내부에 위치하도록 프로그래밍하는 방식
 - 변경에 유연
 
@@ -246,6 +242,7 @@ public class Audience {
 
 
 **결론**
+
 - 설계를 어럽게 만드는 것은 **의존성**
 - 의존성을 제거하여 객체 사이의 **결합도**를 낮춰야 함
 - 결합도를 낮추기 위해 **캡슐화**를 함
@@ -257,19 +254,7 @@ public class Audience {
 
 ```java
 public class Bag {
-
-    private Long amount;
-    private Invitation invitation;
-    private Ticket ticket;
-
-    public Bag(Long amount) {
-        this(amount, null);
-    }
-
-    public Bag(Long amount, Invitation invitation) {
-        this.amount = amount;
-        this.invitation = invitation;
-    }
+    //...
 
     private boolean hasInvitation() {
         return invitation != null;
@@ -296,16 +281,11 @@ public class Bag {
 }
 
 public class Audience {
+    //...
 
-  private Bag bag;
-
-  public Audience(Bag bag) {
-    this.bag = bag;
-  }
-
-  public Long buyTicket(Ticket ticket) {
-    return bag.hold(ticket);
-  }
+    public Long buyTicket(Ticket ticket) {
+        return bag.hold(ticket);
+    }
 }
 ```
 
@@ -313,33 +293,19 @@ public class Audience {
 
 ```java
 public class TicketOffice {
-  private Long amount;
-  private List<Ticket> tickets = new ArrayList<>();
+    //...
 
-  public TicketOffice(Long amount, Ticket... tickets) {
-    this.amount = amount;
-    this.tickets.addAll(Arrays.asList(tickets));
-  }
+    public void sellTicketTo(Audience audience) {
+        plusAmount(audience.buyTicket(getTicket()));
+    }
 
-  private Ticket getTicket() {
-    return tickets.remove(0);
-  }
-
-  public void sellTicketTo(Audience audience) {
-    plusAmount(audience.buyTicket(getTicket()));
-  }
-
-  private void plusAmount(Long amount) {
-    this.amount += amount;
-  }
+    private void plusAmount(Long amount) {
+        this.amount += amount;
+    }
 }
 
 public class TicketSeller {
-    private TicketOffice ticketOffice;
-
-    public TicketSeller(TicketOffice ticketOffice) {
-        this.ticketOffice = ticketOffice;
-    }
+    //...
 
     public void sellTo(Audience audience) {
         ticketOffice.sellTicketTo(audience);
@@ -348,6 +314,7 @@ public class TicketSeller {
 ```
 
 문제점
+
 - TicketOffice와 Audience 사이의 의존성이 추가됨
 
 > 첫째. 어떤 기능을 설계하는 방법은 한 가지 이상일 수 있다.<br>
@@ -360,6 +327,7 @@ public class TicketSeller {
 - 하지만 Theater와 Bag, TicketOffice는 실세계에서 자율적인 존재가 아님
 
 **객체 지향의 세계에서는 모든 객체가 능동적이고 자율적인 존재로 바뀜**
+
 - 의인화(anthropomorphism)
 
 ```text
