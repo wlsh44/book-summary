@@ -7,23 +7,20 @@ import java.time.LocalTime;
 public class PeriodCondition implements DiscountCondition {
 
     private DayOfWeek dayOfWeek;
-    private LocalTime startDateTime;
-    private LocalTime endDateTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
-    public PeriodCondition(DayOfWeek dayOfWeek, LocalTime startDateTime, LocalTime endDateTime) {
+    public PeriodCondition(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
         this.dayOfWeek = dayOfWeek;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
-    public boolean isConditionRight(Screening screening) {
+    public boolean isSatisfiedBy(Screening screening) {
         LocalDateTime whenScreened = screening.getStartTime();
-        return whenScreened.getDayOfWeek().equals(dayOfWeek) && isBetweenPeriod(whenScreened.toLocalTime());
-    }
-
-    private boolean isBetweenPeriod(LocalTime whenScreened) {
-        return (whenScreened.isAfter(startDateTime) && whenScreened.isBefore(endDateTime)) ||
-                (whenScreened.equals(startDateTime) || whenScreened.equals(endDateTime));
+        return whenScreened.getDayOfWeek().equals(dayOfWeek) &&
+                startTime.compareTo(screening.getStartTime().toLocalTime()) <= 0 &&
+                endTime.compareTo(screening.getStartTime().toLocalTime()) >= 0;
     }
 }

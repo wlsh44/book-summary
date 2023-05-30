@@ -1,8 +1,15 @@
 package org.example.v1;
 
-public class NoneDiscountPolicy implements DiscountPolicy {
+import java.util.List;
+
+public class NoneDiscountPolicy extends DiscountPolicy {
+
+    public NoneDiscountPolicy(List<DiscountCondition> conditions) {
+        super(conditions);
+    }
+
     @Override
-    public Money calculateDiscountPrice(Screening screening, Money money) {
-        return money;
+    protected Money getDiscountAmount(Screening screening) {
+        return Money.ZERO;
     }
 }

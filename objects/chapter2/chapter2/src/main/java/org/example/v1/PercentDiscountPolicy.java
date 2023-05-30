@@ -2,21 +2,17 @@ package org.example.v1;
 
 import java.util.List;
 
-public class PercentDiscountPolicy implements DiscountPolicy {
+public class PercentDiscountPolicy extends DiscountPolicy {
 
     private final double percent;
-    private final List<DiscountCondition> discountConditions;
 
     public PercentDiscountPolicy(double percent, List<DiscountCondition> discountConditions) {
+        super(discountConditions);
         this.percent = percent;
-        this.discountConditions = discountConditions;
     }
 
     @Override
-    public Money calculateDiscountPrice(Screening screening, Money money) {
-        long discountCount = discountConditions.stream()
-                .filter(discountCondition -> discountCondition.isConditionRight(screening))
-                .count();
-        return new Money(money.getAmount() * percent * discountCount);
+    protected Money getDiscountAmount(Screening screening) {
+        return screening.getMovieFee().times(percent);
     }
 }

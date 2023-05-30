@@ -14,11 +14,11 @@ public class Screening {
     }
 
     public Reservation reserve(Customer customer, int audienceCount) {
-        return new Reservation(customer, this, calculateFee(audienceCount);, audienceCount);
+        return new Reservation(customer, this, calculateFee(audienceCount), audienceCount);
     }
 
     private Money calculateFee(int audienceCount) {
-        return movie.getDiscountedPrice(this).times(audienceCount);
+        return movie.calculateMovieFee(this).times(audienceCount);
     }
 
     public boolean isSequence(int sequence) {

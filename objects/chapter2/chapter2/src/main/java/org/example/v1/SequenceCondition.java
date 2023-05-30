@@ -9,7 +9,7 @@ public class SequenceCondition implements DiscountCondition {
     }
 
     @Override
-    public boolean isConditionRight(Screening screening) {
-        return this.sequence == screening.getSequence();
+    public boolean isSatisfiedBy(Screening screening) {
+        return screening.isSequence(sequence);
     }
 }

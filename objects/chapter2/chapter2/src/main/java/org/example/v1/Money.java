@@ -28,7 +28,7 @@ public class Money {
         return new Money(this.amount.subtract(amount.amount));
     }
 
-    public Money times(int audienceCount) {
+    public Money times(double audienceCount) {
         return new Money(amount.multiply(BigDecimal.valueOf(audienceCount)));
     }
 
