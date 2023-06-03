@@ -95,3 +95,26 @@
 - Template Method 패턴: 부모 클래스에 기본적인 알고리즘 흐름을 구현하고 중간에 필요한 처리를 자식 클래스에 위임
 
 ![img.png](image/4.png)
+
+## 2-4 상속과 다형성
+
+### 컴파일 시간 의존성과 실행 시간 의존성
+
+Movie는 DiscountPolicy에 의존하지만, 실제로 할인 정책을 적용하기 위해서는 구현체인 AmountDiscountPolicy나 PercentDiscountPolicy가 필요함
+
+하지만 실제로 런타임 상황에서 보면 Movie는 AmountDiscountPolicy, PercentDiscountPolicy와 협력하고 있음
+
+**코드의 의존성과 실행 시점의 의존성이 다름**
+
+- 코드의 의존성과 실행 시점의 의존성이 다를수록 코드를 이해하기 어려워짐
+  - 디버깅 힘듬
+- 코드의 의존성과 실행 시점의 의존성이 다를수록 유연하고 확장 가능해짐
+  - 재사용성 높아짐
+- 어느 한 쪽이 정답이 아닌 트레이드오프가 존재함
+
+### 차이에 의한 프로그래밍
+
+DiscountPolicy에 정의된 모든 속성과 메서드를 물려받는 상속을 이용
+
+
+
