@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.MoneyReportTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-28T01:24:51" hostname="gimjinhoui-MacBookPro.local" time="0.128">
+<testsuite name="org.example.MoneyReportTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-06-04T00:20:26" hostname="gimjinhoui-MacBookPro.local" time="0.114">
   <properties/>
-  <testcase name="값 객체 동등성 테스트" classname="org.example.MoneyReportTest" time="0.128"/>
+  <testcase name="달러에 수를 곱한 결과를 얻어야 함" classname="org.example.MoneyReportTest" time="0.109"/>
+  <testcase name="주가에 주식의 수를 곱한 결과를 얻어야 함" classname="org.example.MoneyReportTest" time="0.001"/>
+  <testcase name="값 객체 동등성 테스트" classname="org.example.MoneyReportTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
