@@ -12,25 +12,25 @@ public class MoneyReportTest {
     @DisplayName("달러에 수를 곱한 결과를 얻어야 함")
     void testMultiplication() throws Exception {
         //given
-        Dollar five = new Dollar(5);
+        Dollar five = Money.dollar(5);
 
         //when
         Dollar product1 = five.times(2);
         Dollar product2 = five.times(3);
 
         //then
-        assertThat(product1).isEqualTo(new Dollar(10));
-        assertThat(product2).isEqualTo(new Dollar(15));
+        assertThat(product1).isEqualTo(Money.dollar(10));
+        assertThat(product2).isEqualTo(Money.dollar(15));
     }
 
     @Test
     @DisplayName("값 객체 동등성 테스트")
     void testEquality() throws Exception {
-        assertThat(new Dollar(5).equals(new Dollar(5))).isTrue();
-        assertThat(new Dollar(5).equals(new Dollar(6))).isFalse();
+        assertThat(Money.dollar(5).equals(Money.dollar(5))).isTrue();
+        assertThat(Money.dollar(5).equals(Money.dollar(6))).isFalse();
         assertThat(new Franc(5).equals(new Franc(5))).isTrue();
         assertThat(new Franc(5).equals(new Franc(6))).isFalse();
-        assertThat(new Franc(5).equals(new Dollar(5))).isTrue();
+        assertThat(new Franc(5).equals(Money.dollar(5))).isFalse();
     }
 
     @Test

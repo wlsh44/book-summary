@@ -1,6 +1,6 @@
 package org.example;
 
-public class Money {
+public abstract class Money {
 
     protected final int amount;
 
@@ -8,9 +8,11 @@ public class Money {
         this.amount = amount;
     }
 
-    public Money times(int multiplier) {
-        return new Money(amount * multiplier);
+    public static Dollar dollar(int amount) {
+        return new Dollar(amount);
     }
+
+    public abstract Money times(int multiplier);
 
     @Override
     public boolean equals(Object obj) {
