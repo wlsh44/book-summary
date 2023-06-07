@@ -135,7 +135,7 @@ DiscountPolicy에 정의된 모든 속성과 메서드를 물려받는 상속을
 
 ## 2-5 추상화와 유연성
 
-## 추상화와 힘
+### 추상화와 힘
 
 추상화를 사용할 경우 두 가지 장점
 1. 추상화만 놓고 봤을 때, 요구 사항의 정책을 높은 수준에서 서술할 수 있음
@@ -145,4 +145,70 @@ DiscountPolicy에 정의된 모든 속성과 메서드를 물려받는 상속을
 2. 설계가 더 유연해짐
    - 추상화를 통해 상위 정책으로 표현하면 기존 구조를 수정하지 않고 새로운 기능을 쉽게 추가할 수 있음
 
+### 유연한 설계
 
+- 할인 정책이 없는 경우?
+```java
+public Money calculateMovieFee(Screening screening) {
+    if (discountPolicy == null) {
+       return fee;
+    }
+    return fee.minus(discountPolicy.calculateDiscountPrice(screening));
+} 
+```
+- 단순히 null 체크를 통해 해결할 수는 있음
+- **할인 정책이 없는 경우를 예외 케이스로 취급 -> 일관성 있는 협력 방식이 무너짐**
+
+> 항상 예외 케이스를 최소화하고 일관성을 유지할 수 있는 방법을 선택하라
+
+```java
+public class NoneDiscountPolicy extends DiscountPolicy {
+
+    public NoneDiscountPolicy(List<DiscountCondition> conditions) {
+        super(conditions);
+    }
+
+    @Override
+    protected Money getDiscountAmount(Screening screening) {
+        return Money.ZERO;
+    }
+}
+```
+
+### 추상 클래스와 인터페이스 트레이드오프
+
+- DiscountPolicy를 인터페이스로 변경하고 NoneDiscountPolicy와 DefaultDiscountPolicy를 만들면 개념적인 혼란과 결합을 제거할 수 있음
+- 다만 설계가 조금 복잡해짐
+- **항상 트레이드오프를 고려해야 함**
+
+### 코드 재사용
+
+- 코드 재사용을 위해서는 상속보다는 컴포지션이 더 좋은 방법일 가능성이 높음
+- Movie가 DiscountPolicy의 코드를 재사용하는 방식이 바로 컴포지션
+
+### 상속
+
+상속 단점 두 가지
+- 캡슐화 위반
+  - 상속 -> 부모 클래스의 내부 구조를 잘 알고 있어야 함
+  - Movie를 상속한 AmountDiscountMovie와 PercentDiscountMovie가 있다고 가정
+    - AmountDiscountMovie와 PercentDiscountMoive 모두 getDiscountAmount을 호출해야 함
+  - 부모 클래스 구현이 자식 클래스에게 노출 -> 캡슐화 깨짐 -> 결합도 높아집 -> 변경 어려워짐
+- 설계를 유연하지 못하게 만듦
+  - 상속은 부모 클래스와 자식 클래스 사이의 관계를 컴파일 시점에 정함
+  - 런타입 도중에 변경이 불가능해지고, 변경을 하려면 객체를 복사를 해야 함
+```java
+Movie movie = new AmountDiscountMovie(...);
+movie = new PercentDiscountMovie(movie);
+```
+  - 컴포지션을 이용하면 단순히 변경 메서드만으로 해결이 됨
+```java
+public void changeDiscountPolicy(DiscountPolicy discountPolicy) {
+    this.discountPolicy = discountPolicy;
+}
+```
+
+### 컴포지션
+
+- 컴포지션은 상속이 가지는 두 가지 문제점을 해결함
+- 하지만 항상 답은 없기 때문에 적절하게 상속과 컴포지션을 잘 사용해야 함
