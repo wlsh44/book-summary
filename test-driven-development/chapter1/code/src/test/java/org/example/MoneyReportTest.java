@@ -14,8 +14,8 @@ public class MoneyReportTest {
         Money five = Money.dollar(5);
 
         //when
-        Money product1 = five.times(2);
-        Money product2 = five.times(3);
+        Expression product1 = five.times(2);
+        Expression product2 = five.times(3);
 
         //then
         assertThat(product1).isEqualTo(Money.dollar(10));
@@ -37,8 +37,8 @@ public class MoneyReportTest {
         Money five = Money.franc(5);
 
         //when
-        Money product1 = five.times(2);
-        Money product2 = five.times(3);
+        Expression product1 = five.times(2);
+        Expression product2 = five.times(3);
 
         //then
         assertThat(product1).isEqualTo(Money.franc(10));
@@ -165,5 +165,39 @@ public class MoneyReportTest {
 
         //then
         assertThat(result).isEqualTo(Money.dollar(10));
+    }
+
+    @Test
+    @DisplayName("sum plus 테스트")
+    void testSumPlusMoney() throws Exception {
+        //given
+        Expression fiveBuckets = Money.dollar(5);
+        Expression tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+
+        //when
+        Expression sum = new Sum(fiveBuckets, tenFrancs).plus(fiveBuckets);
+        Money result = bank.reduce(sum, "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(15));
+    }
+
+    @Test
+    @DisplayName("sum times 테스트")
+    void testSumTimes() throws Exception {
+        //given
+        Expression fiveBuckets = Money.dollar(5);
+        Expression tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+
+        //when
+        Expression sum = new Sum(fiveBuckets, tenFrancs).times(2);
+        Money result = bank.reduce(sum, "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(20));
     }
 }
