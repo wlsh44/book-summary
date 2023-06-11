@@ -129,4 +129,25 @@ public class MoneyReportTest {
         //then
         assertThat(result).isEqualTo(Money.dollar(1));
     }
+
+    @Test
+    @DisplayName("다른 통화 reduce")
+    void testReduceMoneyDifferentCurrency() throws Exception {
+        //given
+        Bank bank = new Bank();
+
+        //when
+        bank.addRate("CHF", "USD", 2);
+        Money result = bank.reduce(Money.franc(2), "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
+
+    @Test
+    @DisplayName("동일 통화인 경우 비율 1 리턴해야 함")
+    void testIdentityRate() throws Exception {
+        int rate = new Bank().rate("USD", "USD");
+        assertThat(rate).isEqualTo(1);
+    }
 }

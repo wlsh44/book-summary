@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.MoneyReportTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-11T01:29:26" hostname="gimjinhoui-MacBookPro.local" time="0.098">
+<testsuite name="org.example.MoneyReportTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2023-06-11T03:20:32" hostname="gimjinhoui-MacBookPro.local" time="0.15">
   <properties/>
-  <testcase name="간단한 더하기 테스트" classname="org.example.MoneyReportTest" time="0.098"/>
+  <testcase name="reduce sum 테스트" classname="org.example.MoneyReportTest" time="0.113"/>
+  <testcase name="간단한 더하기 테스트" classname="org.example.MoneyReportTest" time="0.001"/>
+  <testcase name="달러에 수를 곱한 결과를 얻어야 함" classname="org.example.MoneyReportTest" time="0.002"/>
+  <testcase name="reduce money 테스트" classname="org.example.MoneyReportTest" time="0.001"/>
+  <testcase name="동일 통화인 경우 비율 1 리턴해야 함" classname="org.example.MoneyReportTest" time="0.008"/>
+  <testcase name="주가에 주식의 수를 곱한 결과를 얻어야 함" classname="org.example.MoneyReportTest" time="0.001"/>
+  <testcase name="통화 테스트" classname="org.example.MoneyReportTest" time="0.004"/>
+  <testcase name="값 객체 동등성 테스트" classname="org.example.MoneyReportTest" time="0.003"/>
+  <testcase name="plus가 sum을 리턴해야 함" classname="org.example.MoneyReportTest" time="0.002"/>
+  <testcase name="다른 클래스 동등성 테스트" classname="org.example.MoneyReportTest" time="0.001"/>
+  <testcase name="다른 통화 reduce" classname="org.example.MoneyReportTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
