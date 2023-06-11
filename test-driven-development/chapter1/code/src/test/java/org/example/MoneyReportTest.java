@@ -73,4 +73,19 @@ public class MoneyReportTest {
         //then
         assertThat(money).isEqualTo(franc);
     }
+
+    @Test
+    @DisplayName("간단한 더하기 테스트")
+    void testSimpleAddition() throws Exception {
+        //given
+        Money five = Money.dollar(5);
+        Bank bank = new Bank();
+
+        //when
+        Expression sum = five.plus(Money.dollar(5));
+        Money reduced = bank.reduce(sum, "USD");
+
+        //then
+        assertThat(reduced).isEqualTo(Money.dollar(10));
+    }
 }
