@@ -150,4 +150,20 @@ public class MoneyReportTest {
         int rate = new Bank().rate("USD", "USD");
         assertThat(rate).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("다른 통화 더하기 테스트")
+    void testMixedAddition() throws Exception {
+        //given
+        Expression fiveBucks = Money.dollar(5);
+        Expression tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+
+        //when
+        Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(10));
+    }
 }
