@@ -27,8 +27,6 @@ public class MoneyReportTest {
     void testEquality() throws Exception {
         assertThat(Money.dollar(5).equals(Money.dollar(5))).isTrue();
         assertThat(Money.dollar(5).equals(Money.dollar(6))).isFalse();
-        assertThat(Money.franc(5).equals(Money.franc(5))).isTrue();
-        assertThat(Money.franc(5).equals(new Franc(6, null))).isFalse();
         assertThat(Money.franc(5).equals(Money.dollar(5))).isFalse();
     }
 
@@ -36,7 +34,7 @@ public class MoneyReportTest {
     @DisplayName("주가에 주식의 수를 곱한 결과를 얻어야 함")
     void testFrancMultiplication() throws Exception {
         //given
-        Franc five = Money.franc(5);
+        Money five = Money.franc(5);
 
         //when
         Money product1 = five.times(2);
@@ -68,7 +66,7 @@ public class MoneyReportTest {
     void testDifferenceClassEquality() throws Exception {
         //given
         Money money = new Money(10, "CHF");
-        Franc franc = Money.franc(10);
+        Money franc = Money.franc(10);
 
         //when
 
