@@ -88,4 +88,45 @@ public class MoneyReportTest {
         //then
         assertThat(reduced).isEqualTo(Money.dollar(10));
     }
+
+    @Test
+    @DisplayName("plus가 sum을 리턴해야 함")
+    void testPlusReturnsSum() throws Exception {
+        //given
+        Money five = Money.dollar(5);
+
+        //when
+        Expression result = five.plus(five);
+        Sum sum = (Sum) result;
+
+        //then
+        assertThat(five).isEqualTo(sum.augend);
+        assertThat(five).isEqualTo(sum.addend);
+    }
+
+    @Test
+    @DisplayName("reduce sum 테스트")
+    void testReduceSum() throws Exception {
+        //given
+        Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
+        Bank bank = new Bank();
+
+        //when
+        Money result = bank.reduce(sum, "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(7));
+    }
+
+    @Test
+    @DisplayName("reduce money 테스트")
+    void testReduceMoney() throws Exception {
+        Bank bank = new Bank();
+
+        //when
+        Money result = bank.reduce(Money.dollar(1), "USD");
+
+        //then
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
 }
