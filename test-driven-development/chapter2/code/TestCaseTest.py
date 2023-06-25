@@ -3,14 +3,7 @@ from WasRun import WasRun
 
 
 class TestCaseTest(TestCase):
-    def setUp(self):
+    def testTemplateMethod(self):
         self.test = WasRun("testMethod")
-
-    def testSetUp(self):
         self.test.run()
-        assert (self.test.wasSetUp)
-
-    def testRunning(self):
-        self.test.run()
-        assert(self.test.wasRun)
-
+        assert ("setUp testMethod tearDown " == self.test.log)

@@ -8,3 +8,5 @@
 *.iml
 out
 gen
+
+test-driven-development/chapter2/code/__pycache__/
