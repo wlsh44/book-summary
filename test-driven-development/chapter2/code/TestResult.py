@@ -1,9 +1,13 @@
 class TestResult:
     def __init__(self):
-        self.runCount = 1
+        self.failureCount = 0
+        self.runCount = 0
 
     def testStarted(self):
-        self.runCount = self.runCount + 1
+        self.runCount += 1
 
     def summary(self):
-        return f"{self.runCount} run, 0 failed"
+        return f"{self.runCount} run, {self.failureCount} failed"
+
+    def testFailed(self):
+        self.failureCount += 1
