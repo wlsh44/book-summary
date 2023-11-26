@@ -1,7 +1,6 @@
-package org.example.v1;
+package org.example.v2;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public class Money {
     public static final Money ZERO = Money.wons(0);

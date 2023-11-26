@@ -1,4 +1,4 @@
-package org.example.v1;
+package org.example.v2;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
